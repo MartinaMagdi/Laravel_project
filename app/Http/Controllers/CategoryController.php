@@ -15,7 +15,7 @@ class CategoryController extends Controller
 
     function __construct(){
 
-        $this->middleware('is-admin')->only(['store','update','destroy']);       // only admin  can add or edit or delete category
+        $this->middleware('is-admin')->only(['create','edit','destroy']);       // only admin  can add or edit or delete category
   }
 
     /**
