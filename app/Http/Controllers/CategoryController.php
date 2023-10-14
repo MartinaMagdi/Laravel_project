@@ -55,8 +55,8 @@ class CategoryController extends Controller
         $requestData= \request()->all();
        // $requestData['creator_id']=Auth::id();
        $category = Category::create($requestData);
-        return to_route('category.show', $category->id);
-        }
+       return redirect()->route('category.index');
+    }
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
     {
         //         
         $validator = Validator::make($request->all(), [
-            'name'=>['required', Rule::unique('categories')->ignore($this->category),'min:2']
+            'name'=>['required', Rule::unique('categories')->ignore($category->name),'min:3']
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => "Error", 'data' => "", "message" => $validator->errors()], 401);
