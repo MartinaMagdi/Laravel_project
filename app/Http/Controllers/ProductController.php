@@ -61,7 +61,7 @@ class ProductController extends Controller
         $product->image = $image;
         $product->save();
 
-        return to_route("products.index");
+        return to_route("products.index")->with(["status" => "added", "message" => "Product added successfully"]);
     }
 
     /**
@@ -86,7 +86,6 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        // dd($request);
         if ($request->image) {
             unlink('images/products/' . $product->image);
             $image = $request->name . '.' . $request->image->extension();
@@ -99,7 +98,8 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->name = $request->name;
         $product->save();
-        return to_route("products.index");
+
+        return to_route("products.index")->with(["status" => "updated", "message" => "Product updated successfully"]);
     }
 
     /**
@@ -107,6 +107,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        unlink('images/products/' . $product->image);
+        return to_route("products.index")->with(["status" => "deleted", "message" => "Product deleted successfully"]);
     }
 }

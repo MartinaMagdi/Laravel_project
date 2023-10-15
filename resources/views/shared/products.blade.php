@@ -18,6 +18,16 @@
         @if (Auth::User() !== null && Auth::User()->role == 'admin')
             <div>
                 <a href={{ route('products.create') }} class="btn btn-primary ms-auto d-block w-25">Add Product</a>
+
+                {{-- Alert --}}
+                @if (Session::has('status'))
+                    <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'deleted' ? 'alert-danger' : 'alert-success' }}" role="alert">
+                    <i class="bi bi-check fs-5 rounded-circle text-white px-1 me-1 {{ Session::get('status') == 'deleted' ? 'bg-danger' : 'bg-success' }}"></i>
+                        <strong>{{ Session::get('message') }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="mt-4 w-50 mx-auto">
                     <label for="user" class="mb-1 fs-5 fw-bold">Add order to user</label>
                     <select id="user" class="form-select" aria-label="Default select example">
@@ -54,7 +64,7 @@
                             </div>
                             <div class="card-footer d-flex justify-content-between">
                                 <span class="fs-4 fw-bold">{{ $product->price }} LE</span>
-                                <div class="actions">
+                                <div class="actions d-flex">
                                     @if ($product->available == true)
                                         <a href="#" class="btn btn-success me-1">
                                             <i class="bi bi-cart-plus"></i>
@@ -64,9 +74,13 @@
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary me-1">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a class="btn btn-danger">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <form method="post" action="{{ route('products.destroy', $product->id) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" type="submit">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     @endif
                                 </div>
                             </div>
