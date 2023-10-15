@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string("image")->nullable();
             $table->enum("role", ["user", "admin"])->default("user");
-            $table->string("room");
+            $table->string("room")->nullable();
         });
     }
 
