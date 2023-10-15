@@ -31,6 +31,7 @@ Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('user', UserController::class );
+// Route::get('profile', [ProfileController::class ,'changepass'] )->name('changepass.edit');
 
 #############################GoogleLogin
 Route::get('auth/google',[GoogleController::class,'googlepage']);
