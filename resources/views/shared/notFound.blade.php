@@ -1,4 +1,4 @@
-@extends( ($user->role == 'user') ? 'layouts.userHeader' : 'layouts.adminHeader')
+@extends('layouts.userHeader')
 
 @section('content')
 <section style="padding-top: 50px;">
