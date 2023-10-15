@@ -19,8 +19,8 @@
 
                 <div class="col mt-4">
                     <label for="price" class="fw-bold mb-2">Price</label>
-                    <input type="number" id="price" name="price" class="form-control" placeholder="product price"
-                        value="{{ old('price') }}">
+                    <input type="number" id="price" name="price" min="1" class="form-control"
+                        placeholder="product price" value="{{ old('price') }}">
                 </div>
 
                 @error('price')
@@ -29,7 +29,7 @@
 
                 <div class="col mt-4">
                     <label for="category" class="fw-bold mb-2">Category</label>
-                    <select class="form-select" name="category" aria-label="Default select example" id="category">
+                    <select class="form-select" name="category_id" aria-label="Default select example" id="category">
                         <option selected disabled>Select category</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -50,8 +50,13 @@
                     <small style="color: red" class="mb-4">{{ $message }}</small>
                 @enderror
 
+                <div class="col mt-4">
+                    <input type="checkbox" class="btn-check" id="available" name="available"  value="true">
+                    <label class="btn btn-outline-primary" for="available">Make it available</label>
+                </div>
+
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary px-5 fs-5 mt-3">Create</button>
+                    <button type="submit" class="btn btn-primary px-5 fs-5 mt-5">Add</button>
                 </div>
             </div>
         </form>
