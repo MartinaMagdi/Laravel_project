@@ -44,7 +44,7 @@
 
 
         {{-- Serach aleart if there is no products matched --}}
-        @if (Session::has('status'))
+        @if (Session::get('status') == 'notMatched')
             <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'notMatched' ? 'alert-info' : '' }}"
                 role="alert">
                 <i
