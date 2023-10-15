@@ -35,6 +35,10 @@
                 <a href="{{route('category.index')}}" class="navbar-brand">Users</a>
                 <a href="{{route('category.store')}}" class="navbar-brand">Manual Order</a>
                 <a href="{{route('category.index')}}" class="navbar-brand">Checks</a>
+                <a href="{{route('category.index')}}" class="navbar-brand">Orders </a>
+                <a href="{{route('category.index')}}" class="navbar-brand">Cart </a>
+                <a href="{{route('category.create')}}" class="navbar-brand">Add category</a>
+
                 
                     </ul>
 
