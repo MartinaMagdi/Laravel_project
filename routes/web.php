@@ -27,4 +27,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
+Route::post('/products/search', [ProductController::class, "search"])->name('products.search');
 Route::resource('orders', OrderController::class);

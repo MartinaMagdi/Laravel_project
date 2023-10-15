@@ -4,13 +4,13 @@
     <div class="container">
         {{-- -------------------------------------- Search field ---------------------------------------- --}}
         <div class="input-group mb-3 w-25 ms-auto">
-            <form method="post" class="d-flex w-100">
+            <form method="post" action="{{ route('products.search') }}" class="d-flex w-100">
                 @csrf
-                <input type="text" class="form-control" name="search" placeholder="search for a product"
+                <input type="text" class="form-control" required name="search" placeholder="search for a product"
                     aria-label="search for a product" aria-describedby="basic-addon1">
-                <a type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
-                </a>
+                </button>
             </form>
         </div>
 
@@ -20,9 +20,11 @@
                 <a href={{ route('products.create') }} class="btn btn-primary ms-auto d-block w-25">Add Product</a>
 
                 {{-- Alert --}}
-                @if (Session::has('status'))
-                    <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'deleted' ? 'alert-danger' : 'alert-success' }}" role="alert">
-                    <i class="bi bi-check fs-5 rounded-circle text-white px-1 me-1 {{ Session::get('status') == 'deleted' ? 'bg-danger' : 'bg-success' }}"></i>
+                @if (Session::get('status') == 'delted' || Session::get('status') == 'updated')
+                    <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'deleted' ? 'alert-danger' : 'alert-success' }}"
+                        role="alert">
+                        <i
+                            class="bi bi-check fs-5 rounded-circle text-white px-1 me-1 {{ Session::get('status') == 'deleted' ? 'bg-danger' : 'bg-success' }}"></i>
                         <strong>{{ Session::get('message') }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -37,6 +39,18 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
+        @endif
+
+
+        {{-- Serach aleart if there is no products matched --}}
+        @if (Session::has('status'))
+            <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'notMatched' ? 'alert-info' : '' }}"
+                role="alert">
+                <i
+                    class="bi bi-x fs-5 rounded-circle px-1 me-1 {{ Session::get('status') == 'notMatched' ? 'bg-info' : '' }}"></i>
+                <strong>{{ Session::get('message') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 

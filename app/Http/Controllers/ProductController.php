@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'search']);
         $this->middleware('is_admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
             $products = Product::paginate(15);
             return view("shared.products", ["users" => $users, "products" => $products]);
         } else {
-            $products = Product::where("available", true)->get();
+            $products = Product::where("available", true)->paginate(15);
             return view("shared.products", ["products" => $products]);
         }
     }
@@ -110,5 +110,21 @@ class ProductController extends Controller
         $product->delete();
         unlink('images/products/' . $product->image);
         return to_route("products.index")->with(["status" => "deleted", "message" => "Product deleted successfully"]);
+    }
+
+    public function search(Request $request)
+    {
+        $users = User::where("role", "user")->get();
+
+        if (Auth::User() !== null && Auth::User()->role == 'admin') {
+            $products = Product::where("name", "like", "%$request->search%")->paginate(15);
+        } else {
+            $products = Product::where("name", "like", "%$request->search%")->where("available", true)->paginate(15);
+        }
+
+        if (count($products) > 0)
+            return view("shared.products", ["products" => $products, "users" => $users]);
+        else
+            return to_route("products.index")->with(["status" => "notMatched", "message" => "There is no products matched"]);
     }
 }
