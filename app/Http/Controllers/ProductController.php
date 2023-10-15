@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
@@ -76,15 +77,29 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view("Admin.products.editProduct", ["product" => $product, "categories" => $categories]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        // dd($request);
+        if ($request->image) {
+            unlink('images/products/' . $product->image);
+            $image = $request->name . '.' . $request->image->extension();
+            $request->image->move(public_path('images/products'), $image);
+            $product->image = $image;
+        }
+
+        $product->price = $request->price;
+        $product->available = isset($request->available) ? true : false;
+        $product->category_id = $request->category_id;
+        $product->name = $request->name;
+        $product->save();
+        return to_route("products.index");
     }
 
     /**

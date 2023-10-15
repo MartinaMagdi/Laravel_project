@@ -51,7 +51,7 @@
                 @enderror
 
                 <div class="col mt-4">
-                    <input type="checkbox" class="btn-check" id="available" name="available"  value="true">
+                    <input type="checkbox" class="btn-check" id="available" name="available" value="true" {{ old('available') == 'true'  ? 'checked' : '' }}>
                     <label class="btn btn-outline-primary" for="available">Make it available</label>
                 </div>
 

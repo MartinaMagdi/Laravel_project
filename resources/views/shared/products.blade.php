@@ -32,15 +32,17 @@
 
         {{-- -------------------------------------- Products section ---------------------------------------- --}}
         <div class="products mt-5">
-            <div class="row mb-3">
+            <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4 mb-5">
                         <div class="card bg-white">
                             @if (Auth::User() !== null && Auth::User()->role == 'admin')
                                 @if ($product->available)
-                                    <p class="bg-success text-white fx-5 py-1 px-2 rounded my-1 ms-auto d-block m-1">Available</p>
+                                    <p class="bg-success text-white fx-5 py-1 px-2 rounded my-1 ms-auto d-block m-1">
+                                        Available</p>
                                 @else
-                                    <p class="bg-danger text-white fx-5 py-1 px-2 rounded my-1 ms-auto d-block m-1">Not available</p>
+                                    <p class="bg-danger text-white fx-5 py-1 px-2 rounded my-1 ms-auto d-block m-1">Not
+                                        available</p>
                                 @endif
                             @endif
                             <img max-height="100px" height="300px" width="100%"
@@ -53,13 +55,13 @@
                             <div class="card-footer d-flex justify-content-between">
                                 <span class="fs-4 fw-bold">{{ $product->price }} LE</span>
                                 <div class="actions">
-                                    @if($product->available == true)
-                                    <a href="#" class="btn btn-success me-1">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </a>
+                                    @if ($product->available == true)
+                                        <a href="#" class="btn btn-success me-1">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </a>
                                     @endif
                                     @if (Auth::User() !== null && Auth::User()->role == 'admin')
-                                        <a href="#" class="btn btn-primary me-1">
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary me-1">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <a class="btn btn-danger">
@@ -73,5 +75,6 @@
                 @endforeach
             </div>
         </div>
+        {{ $products->links() }}
     </div>
 @endsection
