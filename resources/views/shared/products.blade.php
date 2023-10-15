@@ -89,6 +89,6 @@
                 @endforeach
             </div>
         </div>
-        {{ $products->links() }}
+        <div class="ms-auto" style="width: fit-content">{{ $products->links() }}</div>
     </div>
 @endsection
