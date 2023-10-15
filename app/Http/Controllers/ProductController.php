@@ -105,8 +105,9 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
-    {
+
+    public function delete($id) {
+        $product = Product::findorfail($id);
         $product->delete();
         unlink('images/products/' . $product->image);
         return to_route("products.index")->with(["status" => "deleted", "message" => "Product deleted successfully"]);
