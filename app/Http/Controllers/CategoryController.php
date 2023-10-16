@@ -51,7 +51,7 @@ class CategoryController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'name'=>'required|unique:categories|min:2'
+            'name'=>'required|unique:categories|min:3'
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => "Error", 'data' => "", "message" => $validator->errors()], 401);
