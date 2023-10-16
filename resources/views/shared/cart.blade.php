@@ -1,9 +1,6 @@
 @extends('layouts.userHeader')
 
-@section('content'
-
-
-)
+@section('content')
 <div class="container my-5 ">
    <div class="card">
       <div class="card-body">
@@ -25,10 +22,14 @@
                  </div>
             </div>
             <div class="col-md-3">
-                  <h3>{{ $item->price} }</h3>
+                  <h3>{{ $item->price }}</h3>
             </div>
             <div class="col-md-2">
-               <button class="btn btn-danger">X</button>
+            <form action="{{route('item.destroy',$item->id)}}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger">X</button>
+            </form>
 
             </div>
         
@@ -69,3 +70,4 @@
 
 
 @endsection
+

@@ -63,4 +63,7 @@ class ProductController extends Controller
     {
         //
     }
+    public function itemDestroy($id){
+        
+    }
 }
