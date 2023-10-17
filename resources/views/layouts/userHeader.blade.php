@@ -65,8 +65,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="position:relative; padding-left:50px;">
-                       <!--     <img src="{{asset('image/'.'zara1.jpg' )}}" style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius:50%;">   --> 
-                         <!--   <img src="/public/images/{{ Auth::user()->image }}" style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius:50%;"> -->
+                        <!--   <img src="{{asset('images/avatars/'.$user->image)}}" style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius:50%;"> -->
                                 {{ Auth::user()->name }}
                                 </a>
 
