@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +32,9 @@ Route::resource('products', ProductController::class);
 Route::post('/products/search', [ProductController::class, "search"])->name('products.search');
 Route::get('/products/delete/{id}', [ProductController::class, "delete"])->name('products.delete');
 Route::resource('orders', OrderController::class);
+Route::resource('user', UserController::class );
+
+#############################GoogleLogin
+Route::get('auth/google',[GoogleController::class,'googlepage']);
+Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
+
