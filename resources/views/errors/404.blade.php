@@ -1,4 +1,5 @@
-@extends('layouts.userHeader')
+@extends(Auth::User() == null ? 'layouts.userHeader' : (Auth::User()->role == 'admin' ? 'layouts.adminHeader' : 'layouts.userHeader'))
+
 
 @section('content')
 <section style="padding-top: 50px;">

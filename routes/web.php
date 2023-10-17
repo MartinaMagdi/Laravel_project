@@ -19,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'index']);
 
 Auth::routes();
 
@@ -38,3 +36,4 @@ Route::resource('user', UserController::class );
 Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 
+Route::resource('orders', OrderController::class);

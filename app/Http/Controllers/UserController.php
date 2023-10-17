@@ -41,11 +41,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request_data = $request->all();
-        if ($request->hasFile("image")) {
-            $image = $request->file("image");
-            $path = $image->store("" ,'avatars');
-            $request_data["image"] = $path;
-        }
+        // if ($request->hasFile("image")) {
+        //     $image = $request->file("image");
+        //     $path = $image->store("" ,'avatars');
+        //     $request_data["image"] = $path;
+        // }
+        User::create($request_data);
         return to_route('user.index');
 
 
