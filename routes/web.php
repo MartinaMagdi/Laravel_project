@@ -28,4 +28,3 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
-//Route::delete('item\{id}',[ProductController::class,'itemDestroy'])->name('item.destroy');
