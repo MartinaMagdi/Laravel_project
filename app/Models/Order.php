@@ -21,4 +21,6 @@ class Order extends Model
     function order_products() {
         return $this->hasMany(OrderProduct::class);
     }
+
+
 }

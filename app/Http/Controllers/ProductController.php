@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\User;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +33,6 @@ class ProductController extends Controller
             $products = Product::where("available", true)->paginate(15);
             return view("shared.products", ["products" => $products]);
         }
-        //
     }
 
     /**
@@ -41,7 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view("admin.products.addProduct", ["categories" => $categories]);
     }
 
     /**
