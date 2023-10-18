@@ -5,6 +5,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderAdminCheck;
+use App\Http\Controllers\AdminOrders;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,12 @@ Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
 Route::post('/products/search', [ProductController::class, "search"])->name('products.search');
 Route::resource('orders', OrderController::class);
+
+// user
+// Route::post('orders', [ OrderController::class , 'filterOrder' ] );
+
+// admin
+
+Route::get('check', [OrderAdminCheck::class, 'index']);
+Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
+Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
