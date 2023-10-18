@@ -1,60 +1,7 @@
 @extends('layouts.adminHeader')
 
 @section('content')
-    <div class="container">
-        <h3 class="text-center fw-bold mb-5"><span class="text-primary fs-1">Add</span> new product</h3>
-
-        <form method="post" action="{{ route('products.store') }}" class="w-75 mx-auto" enctype="multipart/form-data">
-            @csrf
-            <div class="form-row">
-                <div class="col">
-                    <label for="name" class="fw-bold mb-2">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="product name"
-                        value="{{ old('name') }}">
-                </div>
-
-                @error('name')
-                    <small style="color: red" class="mb-4">{{ $message }}</small>
-                @enderror
-
-                <div class="col mt-4">
-                    <label for="price" class="fw-bold mb-2">Price</label>
-                    <input type="number" id="price" name="price" class="form-control" placeholder="product price"
-                        value="{{ old('price') }}">
-                </div>
-
-                @error('price')
-                    <small style="color: red" class="mb-4">{{ $message }}</small>
-                @enderror
-
-                <div class="col mt-4">
-                    <label for="category" class="fw-bold mb-2">Category</label>
-                    <select class="form-select" name="category" aria-label="Default select example" id="category">
-                        <option selected disabled>Select category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                @error('category')
-                    <small style="color: red" class="mb-4">{{ $message }}</small>
-                @enderror
-
-                <div class="col mt-4">
-                    <label for="image" class="fw-bold mb-2">Image</label>
-                    <input class="form-control" type="file" id="image" name="image" value="{{ old('image') }}">
-                </div>
-
-                @error('image')
-                    <small style="color: red" class="mb-4">{{ $message }}</small>
-                @enderror
-
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary px-5 fs-5 mt-3">Create</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    </div>
+<div class="container">
+    add product
+</div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -56,6 +56,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                                
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <a  href="{{ url('auth/google') }}" style="margin-top:10px;color: #545454;background-color: #ffffff;box-shadow: 0 1px 2px 1px #ddd;" class="btn btn-lg btn-google btn-block text-capitalize btn-outline" href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a>
+
+                                </div>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
