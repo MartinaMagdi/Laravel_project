@@ -71,4 +71,7 @@
         </form>
     </div>
     </div>
+<div class="container">
+    add product
+</div>
 @endsection

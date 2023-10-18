@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -22,8 +22,7 @@ class UserController extends Controller
         $users = User::all();
         return view('Admin.users.index',['users'=>$users]);
         }
-        return  abort(403);
-
+        return  abort(403);       
     }
 
     /**
@@ -47,9 +46,14 @@ class UserController extends Controller
         //     $request_data["image"] = $path;
         // }
         User::create($request_data);
+        if ($request->hasFile("image")) {
+            $image = $request->file("image");
+            $path = $image->store("uploadedfile" ,'avatars');
+            $request_data["image"] = $path;
+        }
+        User::create($request_data);
+
         return to_route('user.index');
-
-
     }
 
     /**
@@ -66,6 +70,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+     return view('Admin.users.edituser', compact('user'));
     }
 
     /**
@@ -73,7 +78,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+        'name' => 'required|string|max:255',
+        // Add validation rules for other fields as needed
+    ]);
+    $request_data = $request->all();
+    if ($request->hasFile("image")) {
+        $image = $request->file("image");
+        $path = $image->store("uploadedfile" ,'avatars');
+        $request_data["image"] = $path;
+
+    }
+    $user->update($request_data);
+    return redirect()->route('user.index')->with('success', 'Profile updated successfully');
+
     }
 
     /**

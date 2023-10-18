@@ -24,7 +24,8 @@
             <td>{{$user->room}}</td>
             <td>{{$user->google_id}}</td>
             <td class="d-flex">
-                <a href="" class="btn btn-primary me-3">Edit</a>
+                <a href="{{ route('user.edit',$user->id) }}" class="btn btn-primary me-3">Edit</a>
+
                 <form  action="{{route('user.destroy',$user->id )}}" method="post">
                 @csrf
                 @method('delete')
@@ -36,6 +37,5 @@
         @endif
     @endforeach
     </table>
-
 </div>
 @endsection

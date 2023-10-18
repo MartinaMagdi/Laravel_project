@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -65,11 +66,36 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+    //     if (request()->hasfile('image')) {
+    //         $file = request()->file('image');
+    //             $extension = $file->getClientOriginalExtension(); // getting image extension
+    //             $filename = time() . '.' . $extension;
+    //             $file->move('', $filename);
+    
+    // //see above line.. path is set.(uploads/appsetting/..)->which goes to public->then create
+    // //a folder->upload and appsetting, and it wil store the images in your file.
+    
+    //             $data->image = $filename;
+        
+
+ 
+
+   // Image upload code
+   if (request()->hasFile('image')) {
+    $image = request()->file("image");
+    $path = $image->store("uploadedfile" ,'avatars');
+    $data["image"] = $path;
+
+   }   
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'room' => $data['room'],
+            'image'=>$data['image'],
             'password' => Hash::make($data['password']),
         ]);
+        // return $user;
     }
 }
