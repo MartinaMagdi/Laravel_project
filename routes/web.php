@@ -54,11 +54,9 @@ Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 Route::resource('orders', OrderController::class);
 
-// user
-// Route::post('orders', [ OrderController::class , 'filterOrder' ] );
-
 // admin
 
 Route::get('check', [OrderAdminCheck::class, 'index']);
-Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
-Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
+
+Route::resource('admin', AdminOrders::class);
+

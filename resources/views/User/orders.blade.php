@@ -67,7 +67,7 @@
 
                             <td>
 
-                                @if ($order->status == 'done')
+                                @if ($order->status != 'done')
                                     <form action="{{ route('orders.destroy', $order) }}" method="post">
                                         @csrf
                                         @method('delete')
@@ -76,9 +76,7 @@
                                 @endif
 
                             </td>
-                            <td>
-                                <a href="">cancel</a>
-                            </td>
+
                         </tr>
 
                         <div class="collapse" id="myCollapse-{{ $order->id }}">

@@ -39,7 +39,6 @@
                             <th scope="col">Order date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Action</th>
 
                         </tr>
                     </thead>
@@ -65,12 +64,6 @@
                                     ?>
                                 </td>
 
-                                <td>
-                                    @if ($order->status == 'done')
-                                        <a href="">Cancel</a>
-                                    @endif
-
-                                </td>
                             </tr>
 
                             <div class="collapse" id="myCollapse-{{ $order->id }}">

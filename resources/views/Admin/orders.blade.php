@@ -75,11 +75,12 @@
 
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin-update') }}" method="POST">
+                                    <form action="{{ route('admin.update', $order) }}" method="POST">
                                         @csrf
+                                        @method('put')
                                         <select name="status" >
                                             <option value="processing">processing</option>
-                                            <option value="delivered">delivered</option>
+                                            <option value="out for delivery">out for delivery</option>
                                             <option value="done">done</option>
                                         </select>
                                         <button type="submit">update</button>
