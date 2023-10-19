@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderAdminCheck;
 use App\Http\Controllers\AdminOrders;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,4 @@ Route::get('check', [OrderAdminCheck::class, 'index']);
 
 Route::resource('admin', AdminOrders::class);
 
+Route::resource('cart', CartController::class);

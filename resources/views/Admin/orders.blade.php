@@ -94,8 +94,8 @@
                                     @foreach ($order->order_products as $product_item)
                                         <div class="col mb-4">
                                             <div class="card">
-                                                <img src="{{ $product_item->product->image }}" alt="Product Image"
-                                                    class="card-img-top">
+                                                <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image"
+                                                    class="card-img-top" style="height: 200px">
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{ $product_item->product->price }}</h5>
                                                 </div>
