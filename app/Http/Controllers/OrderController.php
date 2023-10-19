@@ -161,6 +161,6 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
-        return to_route('orders.index');
+        return to_route('orders.index')->with(["status" => "deleted", "message" => "The product is deleted successfully"]);
     }
 }
