@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends(Auth::User() == null ? 'layouts.userHeader' : (Auth::User()->role == 'admin' ? 'layouts.adminHeader' : 'layouts.userHeader'))
+
 @section('content')
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <div class="container">

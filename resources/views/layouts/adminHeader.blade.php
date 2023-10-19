@@ -28,10 +28,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                    <a class="navbar-brand" href="{{('home') }}">{{ __('Home') }}</a>
+                    <a class="navbar-brand" href="{{route('products.index')}}">Home</a>
 
 
                 <a href="{{route('products.index')}}" class="navbar-brand">Products</a>
+                <a href="{{route('categories.index')}}" class="navbar-brand">Categories</a>
                 <a href="{{route('user.index')}}" class="navbar-brand">Users</a>
                 <a href="{{route('admin-check')}}" class="navbar-brand">Checks</a>
                 <a href="{{route('admin-index')}}" class="navbar-brand">Orders </a>
@@ -71,11 +72,11 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="position:relative; padding-left:50px;">
                                 <img src="/images/avatars/{{ Auth::user()->image }}"  style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius: 50%">
-                                admin
+                                {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="" >{{__('Profile')}}</a>
+                                <a class="dropdown-item" href="{{route('profile')}}" >{{__('Profile')}}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

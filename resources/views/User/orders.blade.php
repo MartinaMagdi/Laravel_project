@@ -1,4 +1,4 @@
-@extends('layouts.userHeader')
+@extends(Auth::User() == null ? 'layouts.userHeader' : (Auth::User()->role == 'admin' ? 'layouts.adminHeader' : 'layouts.userHeader'))
 
 @section('content')
     <style>

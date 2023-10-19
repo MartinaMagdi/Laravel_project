@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                    <a class="navbar-brand" href="{{('home') }}">{{ __('Home') }}</a>
+                    <a class="navbar-brand" href="{{ route('products.index') }}">{{ __('Home') }}</a>
 
 
                 <a href="{{route('orders.index')}}" class="navbar-brand">My Orders</a>
@@ -71,7 +71,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="" >{{__('Profile')}}</a>
+                                    <a class="dropdown-item" href="{{route('profile')}}" >{{__('Profile')}}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
