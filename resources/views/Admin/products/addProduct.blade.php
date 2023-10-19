@@ -45,7 +45,7 @@
 
 
                 <div class="col-12 col-md-6 mt-4 d-flex align-items-end">
-                    <a href="" class="fs-5 fw-medium">Add category</a>
+                    <a href="{{route('categories.create')}}" class="fs-5 fw-medium">Add category</a>
                 </div>
 
                 <div class="col-12 mt-4">
