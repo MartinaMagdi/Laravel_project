@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('is_user');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -57,8 +61,10 @@ class CartController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $order = $request->orderId;
-        $product = $request->productId;
+        $orderProduct = OrderProduct::findOrFail($id);
+
+        $order = $orderProduct->order_id;
+        $product = $orderProduct->product_id;
         $requestType = $request->btn;
         if($requestType == 'plus'){
             $orderProduct = new OrderProduct();
@@ -67,14 +73,10 @@ class CartController extends Controller
             $orderProduct->save();
             return to_route('cart.index');
         }else{
-            $orderProduct = OrderProduct::findOrFail($id);
             $orderProduct->delete();
             return to_route('cart.index');
         }
 
-        // if($request->btn == 'plus'){
-        //     dd('plus'. $id);
-        // }
     }
 
     /**

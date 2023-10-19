@@ -39,7 +39,6 @@
                             <th scope="col">Order date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Amount</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -63,9 +62,7 @@
                                     echo $sumOfPrice;
                                     ?>
                                 </td>
-
                             </tr>
-
                             <div class="collapse" id="myCollapse-{{ $order->id }}">
                                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
                                     @foreach ($order->order_products as $product_item)
@@ -82,8 +79,6 @@
                                 </div>
                             </div>
                         @endforeach
-
-
                     </tbody>
                 </table>
                 <div class="price">

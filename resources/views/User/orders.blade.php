@@ -63,10 +63,7 @@
                                 echo $sumOfPrice;
                                 ?>
                             </td>
-
-
                             <td>
-
                                 @if ($order->status != 'done')
                                     <form action="{{ route('orders.destroy', $order) }}" method="post">
                                         @csrf
@@ -74,18 +71,15 @@
                                         <input type="submit" value="Cancel" name="submit-delete">
                                     </form>
                                 @endif
-
                             </td>
-
                         </tr>
-
                         <div class="collapse" id="myCollapse-{{ $order->id }}">
                             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
                                 @foreach ($order->order_products as $product_item)
                                     <div class="col mb-4">
                                         <div class="card">
-                                            <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image"
-                                            class="card-img-top" style="height: 220px">
+                                            <img src="{{ asset('images/products/' . $product_item->product->image) }}"
+                                                alt="Product Image" class="card-img-top" style="height: 220px">
                                             <div class="card-body">
                                                 <h5 class="card-title text-primary">{{ $product_item->product->price }}</h5>
                                             </div>
@@ -95,8 +89,6 @@
                             </div>
                         </div>
                     @endforeach
-
-
                 </tbody>
             </table>
             <div class="price">
@@ -120,12 +112,9 @@
                         ?>
                     </p>
                 </div>
-
             </div>
-
         </div>
     </div>
-
     <script>
         function toggleCollapse(orderId) {
             console.log('clicked');
