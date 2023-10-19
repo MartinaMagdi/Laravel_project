@@ -33,9 +33,8 @@
 
                 <a href="{{route('products.index')}}" class="navbar-brand">Products</a>
                 <a href="{{route('user.index')}}" class="navbar-brand">Users</a>
-                <a href="{{route('categories.store')}}" class="navbar-brand">Manual Order</a>
-                <a href="{{route('categories.index')}}" class="navbar-brand">Checks</a>
-                <a href="{{route('categories.index')}}" class="navbar-brand">Orders </a>
+                <a href="{{route('admin-check')}}" class="navbar-brand">Checks</a>
+                <a href="{{route('admin-index')}}" class="navbar-brand">Orders </a>
                 <a href="{{route('categories.index')}}" class="navbar-brand">Cart </a>
                 <a href="{{route('categories.create')}}" class="navbar-brand">Add category</a>
 
@@ -71,7 +70,8 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="position:relative; padding-left:50px;">
-                        admin
+                                <img src="/images/avatars/{{ Auth::user()->image }}"  style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius: 50%">
+                                admin
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

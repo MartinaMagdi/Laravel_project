@@ -31,8 +31,8 @@
                     <a class="navbar-brand" href="{{('home') }}">{{ __('Home') }}</a>
 
 
-                <a href="{{route('products.index')}}" class="navbar-brand">My Orders</a>
-                <a href="{{route('products.index')}}" class="navbar-brand">Cart</a>
+                <a href="{{route('orders.index')}}" class="navbar-brand">My Orders</a>
+                <a href="{{route('orders.index')}}" class="navbar-brand">Cart</a>
 
                 
                     </ul>
@@ -42,7 +42,7 @@
                           
 
                               
-                        <!-- Authentication Links -->
+                        <!-- Authentication Lincks -->
                         
                   
         
@@ -65,6 +65,8 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="position:relative; padding-left:50px;">
+                                <img src="/images/avatars/{{ Auth::user()->image }}"  style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius: 50%">
+
                                 {{ Auth::user()->name }}
                                 </a>
 

@@ -59,6 +59,6 @@ Route::resource('orders', OrderController::class);
 
 // admin
 
-Route::get('check', [OrderAdminCheck::class, 'index']);
+Route::get('check', [OrderAdminCheck::class, 'index'])->name('admin-check');
 Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
 Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
