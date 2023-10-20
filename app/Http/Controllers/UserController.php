@@ -37,15 +37,11 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+   
+
     public function store(Request $request)
     {
         $request_data = $request->all();
-        // if ($request->hasFile("image")) {
-        //     $image = $request->file("image");
-        //     $path = $image->store("" ,'avatars');
-        //     $request_data["image"] = $path;
-        // }
-        User::create($request_data);
         if ($request->hasFile("image")) {
             $image = $request->file("image");
             $path = $image->store("uploadedfile" ,'avatars');
@@ -54,6 +50,8 @@ class UserController extends Controller
         User::create($request_data);
 
         return to_route('user.index');
+
+
     }
 
     /**
