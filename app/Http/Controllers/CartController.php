@@ -12,15 +12,24 @@ class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('is_user');
     }
 
     public function index()
     {
         $userId = Auth::id();
-
-        $orders = Order::where('user_id', $userId)->whereIn('status', ['cart'])->paginate(4);
-        return view('User.cart', compact('orders'));
+        if (Auth::User() !== null && Auth::User()->role == 'admin') {
+            $orders = Order::where('creator_id', $userId)->whereIn('status', ['cart'])->paginate(4);
+            foreach ($orders as $order) {
+                $user = User::where('id', $order->user_id)->first();
+            }
+        } else {
+            $orders = Order::where('user_id', $userId)->whereIn('status', ['cart'])->paginate(4);
+        }
+        
+        if(isset($user)) {
+            return view('shared.cart', compact('orders', 'user'));
+        }
+        return view('shared.cart', compact('orders'));
     }
 
 
@@ -32,16 +41,18 @@ class CartController extends Controller
 
         // dd($orders);
 
-        foreach($orders as $orderId)
-        {
+        foreach ($orders as $orderId) {
             $order = Order::findOrFail($orderId);
             // dump($order->id);
             $order->update([
                 'note' => $request->client_note,
-                'status' => 'done'
+                'status' => 'processing'
             ]);
         }
-        return to_route('cart.index');
+        if (Auth::User() !== null && Auth::User()->role == 'admin') {
+            return to_route('admin-index');
+        }
+        return to_route('orders.index');
     }
 
 
@@ -52,7 +63,6 @@ class CartController extends Controller
             'quantity' => $request->quantity
         ]);
         return to_route('cart.index');
-
     }
 
 

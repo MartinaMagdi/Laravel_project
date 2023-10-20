@@ -8,7 +8,7 @@
     </style>
 
     <div class="container">
-        <p class="h2 fw-bold mb-3">my orders</p>
+        <p class="h2 fw-bold mb-3">My orders</p>
         <form action="{{ route('orders.index') }}" class="form-pick-date form-inline" method="POST">
             @csrf
             <div class="row">
@@ -64,7 +64,7 @@
                                 ?>
                             </td>
                             <td>
-                                @if ($order->status != 'done')
+                                @if ($order->status == 'processing')
                                     <form action="{{ route('orders.destroy', $order) }}" method="post">
                                         @csrf
                                         @method('delete')

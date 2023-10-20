@@ -32,7 +32,7 @@
 
 
                 <a href="{{route('orders.index')}}" class="navbar-brand">My Orders</a>
-                <a href="{{route('orders.index')}}" class="navbar-brand">Cart</a>
+                <a href="{{route('cart.index')}}" class="navbar-brand">Cart</a>
 
                 
                     </ul>

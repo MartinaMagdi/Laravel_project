@@ -36,8 +36,8 @@
                 <a href="{{route('user.index')}}" class="navbar-brand">Users</a>
                 <a href="{{route('admin-check')}}" class="navbar-brand">Checks</a>
                 <a href="{{route('admin-index')}}" class="navbar-brand">Orders </a>
-                <a href="{{route('categories.index')}}" class="navbar-brand">Cart </a>
-                <a href="{{route('categories.create')}}" class="navbar-brand">Add category</a>
+                <a href="{{route('cart.index')}}" class="navbar-brand">Cart</a>
+                {{-- <a href="{{route('categories.create')}}" class="navbar-brand">Add category</a> --}}
 
                 
                     </ul>
