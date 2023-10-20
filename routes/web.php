@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderAdminCheck;
 use App\Http\Controllers\AdminOrders;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,11 +56,14 @@ Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 Route::resource('orders', OrderController::class);
 
-// user
-// Route::post('orders', [ OrderController::class , 'filterOrder' ] );
-
 // admin
 
 Route::get('check', [OrderAdminCheck::class, 'index'])->name('admin-check');
 Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
 Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
+
+Route::resource('admin', AdminOrders::class);
+
+Route::resource('cart', CartController::class);
+
+Route::post('cart/{orders}', [CartController::class, 'submit'])->name('cart.submit');

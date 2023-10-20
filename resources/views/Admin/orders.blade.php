@@ -7,8 +7,6 @@
             .collapse {
                 display: none;
             }
-
-
         </style>
 
         <div class="container">
@@ -42,7 +40,6 @@
                             <th scope="col">Status</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Action</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -72,29 +69,27 @@
                                     @if ($order->status == 'done')
                                         <a href="">Cancel</a>
                                     @endif
-
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin-update') }}" method="POST">
+                                    <form action="{{ route('admin.update', $order) }}" method="POST">
                                         @csrf
-                                        <select name="status" >
+                                        @method('put')
+                                        <select name="status">
                                             <option value="processing">processing</option>
-                                            <option value="delivered">delivered</option>
+                                            <option value="out for delivery">out for delivery</option>
                                             <option value="done">done</option>
                                         </select>
                                         <button type="submit">update</button>
                                     </form>
-
                                 </td>
                             </tr>
-
                             <div class="collapse" id="myCollapse-{{ $order->id }}">
                                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
                                     @foreach ($order->order_products as $product_item)
                                         <div class="col mb-4">
                                             <div class="card">
-                                                <img src="{{ $product_item->product->image }}" alt="Product Image"
-                                                    class="card-img-top">
+                                                <img src="{{ asset('images/products/' . $product_item->product->image) }}"
+                                                    alt="Product Image" class="card-img-top" style="height: 200px">
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{ $product_item->product->price }}</h5>
                                                 </div>
@@ -104,8 +99,6 @@
                                 </div>
                             </div>
                         @endforeach
-
-
                     </tbody>
                 </table>
                 <div class="price">
@@ -113,7 +106,6 @@
                         Total price :
                     </p>
                     <p class="total-price fw-bold fs-3 text-primary" style="display: inline; margin-right: 10px;">
-
                         <?php
                         $totalPrice = 0;
                         foreach ($orders as $order) {
@@ -129,7 +121,6 @@
 
             </div>
         </div>
-
         <script>
             function toggleCollapse(orderId) {
                 console.log('clicked');
@@ -144,8 +135,6 @@
                     collapseBtn.innerHTML = '<i class="bi bi-plus-lg"></i>';
                 }
             }
-
-
         </script>
     </div>
 @endsection

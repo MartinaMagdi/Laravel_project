@@ -39,8 +39,6 @@
                             <th scope="col">Order date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Action</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -64,21 +62,13 @@
                                     echo $sumOfPrice;
                                     ?>
                                 </td>
-
-                                <td>
-                                    @if ($order->status == 'done')
-                                        <a href="">Cancel</a>
-                                    @endif
-
-                                </td>
                             </tr>
-
                             <div class="collapse" id="myCollapse-{{ $order->id }}">
                                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
                                     @foreach ($order->order_products as $product_item)
                                         <div class="col mb-4">
                                             <div class="card">
-                                                <img src="{{ $product_item->product->image }}" alt="Product Image"
+                                                <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image"
                                                     class="card-img-top">
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{ $product_item->product->price }}</h5>
@@ -89,8 +79,6 @@
                                 </div>
                             </div>
                         @endforeach
-
-
                     </tbody>
                 </table>
                 <div class="price">

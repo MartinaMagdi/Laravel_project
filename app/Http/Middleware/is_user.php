@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class is_user
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!(Auth::user()->role === 'admin')) {
+        if (!(Auth::user()->role === 'user')) {
             return redirect('/')->with(403, 'access denied');
         }
         return $next($request);

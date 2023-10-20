@@ -41,7 +41,7 @@ class OrderController extends Controller
             return view('User.orders', compact('orders'));
 
         }else{
-            $orders = Order::where('user_id', $userId)->paginate(4);
+            $orders = Order::where('user_id', $userId)->whereIn('status', ['processing', 'out for delivery', 'done'])->paginate(4);
             return view('User.orders', compact('orders'));
         }
     }
@@ -65,17 +65,14 @@ class OrderController extends Controller
     //     return view('User.orders', compact('orders'));
 
     // }
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreOrderRequest $request)
     {
         if (Auth::User() == null) {
@@ -83,7 +80,7 @@ class OrderController extends Controller
         }
 
         $product_id = $request->input('product_id');
-        
+
         if (Auth::User()->role == 'admin') {
             $user_id = $request->user_id;
             $creator_id = Auth::id();
