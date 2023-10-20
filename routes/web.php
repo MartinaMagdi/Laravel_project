@@ -55,14 +55,20 @@ Route::resource('/user', UserController::class )->middleware('auth');
 Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 Route::resource('orders', OrderController::class);
+Route::get('order', [OrderController::class, 'filter'])->name('order.filter');
 
 // admin
 
 Route::get('check', [OrderAdminCheck::class, 'index'])->name('admin-check');
 Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
 Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
+// Route::get('check', [OrderAdminCheck::class, 'index'])->name('check.index');
+Route::get('checks', [OrderController::class, 'filter'])->name('check.filter');
+Route::get('checks', [OrderController::class, 'filterWithStatusDone'])->name('check.filterWithStatusDone');
 
 Route::resource('admin', AdminOrders::class);
+Route::get('admin-filter', [OrderController::class, 'filter'])->name('admin.filter');
+
 
 Route::resource('cart', CartController::class);
 

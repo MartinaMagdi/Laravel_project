@@ -10,21 +10,21 @@
         </style>
 
         <div class="container">
-            <p class="h2 fw-bold mb-3"> orders</p>
-            <form action="#" class="form-pick-date form-inline" method="POST">
+            <p class="h2 fw-bold mb-3">Checks</p>
+            <form action="{{ route('check.filterWithStatusDone') }}" class="form-pick-date form-inline" method="get">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="startDate" class="fs-5">Start from</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate"
+                            <input required type="date" class="form-control" id="startDate" name="startDate"
                                 min="<?php echo date('Y-m-d', strtotime('-4 year')); ?>" max="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="endDate" class="fs-5">Until</label>
-                            <input type="date" class="form-control" id="endDate" name="endDate"
+                            <input required type="date" class="form-control" id="endDate" name="endDate"
                                 max="<?php echo date('Y-m-d', strtotime('+1 year')); ?>">
                         </div>
                     </div>
@@ -100,6 +100,7 @@
                 </div>
 
             </div>
+            <div class="ms-auto" style="width: fit-content">{{ $orders->links() }}</div>
         </div>
 
         <script>

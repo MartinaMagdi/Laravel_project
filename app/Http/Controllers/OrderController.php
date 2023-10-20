@@ -14,7 +14,8 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth')->only('index');
     }
     /**
@@ -25,7 +26,7 @@ class OrderController extends Controller
         $userId = Auth::id();
 
         // dd($userId);
-        if($request){
+        if ($request) {
 
             $startDate = Carbon::createFromFormat('Y-m-d', $request->startDate)->startOfDay();
             $endDate = Carbon::createFromFormat('Y-m-d', $request->endDate)->endOfDay();
@@ -34,37 +35,70 @@ class OrderController extends Controller
 
 
             $orders = DB::table('orders')
-            ->where('user_id', $userId)
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->paginate(4);
+                ->where('user_id', $userId)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->paginate(4);
 
             return view('User.orders', compact('orders'));
-
-        }else{
+        } else {
             $orders = Order::where('user_id', $userId)->whereIn('status', ['processing', 'out for delivery', 'done'])->paginate(4);
             return view('User.orders', compact('orders'));
         }
     }
 
-    // public function filterOrder(Request $request){
-    //     // $startDate = $request->startDate;
-    //     // $endData   = $request->endDate;
+    public function filter(Request $request)
+    {
+        $orderDetails = OrderProduct::all();
+        $start_date = $request->startDate;
+        $end_date = $request->endDate;
 
-    //     $startDate = Carbon::createFromFormat('Y-m-d', $request->startDate)->startOfDay();
-    // $endDate = Carbon::createFromFormat('Y-m-d', $request->endDate)->endOfDay();
+        // dd($start_date, $end_date);
+        if (Auth::User()->role == 'admin') {
+            if ($start_date && $end_date) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                    ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                    ->whereIn('status', ['processing', 'out for delivery'])
+                    ->paginate(4);
+                // dd($user_orders);
+            } else {
+                $orders = [];
+            }
+            return view('Admin.orders', compact('orders'));
+        } else {
+            if ($start_date && $end_date) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                    ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                    ->whereIn('status', ['processing', 'out for delivery', 'done'])
+                    ->paginate(4);
+                // dd($user_orders);
+            } else {
+                $orders = [];
+            }
+            return view('User.orders', compact('orders'));
+        }
 
-    //     $userId = auth::id();
+    }
 
-    //     $orders = DB::table('orders')
-    //     ->where('user_id', $userId)
-    //     ->whereBetween('created_at', [$startDate, $endDate])
-    //     ->paginate(4);
+    public function filterWithStatusDone(Request $request)
+    {
+        $orderDetails = OrderProduct::all();
+        $start_date = $request->startDate;
+        $end_date = $request->endDate;
 
-    //     // dd($startDate, $endDate);
-    //     // dd($orders);
-    //     return view('User.orders', compact('orders'));
+        // dd($start_date, $end_date);
 
-    // }
+        if ($start_date && $end_date) {
+            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->where('status', 'done')
+                ->paginate(4);
+            // dd($orders);
+        } else {
+            $orders = [];
+        }
+
+        return view('Admin.checks', compact('orders'));
+    }
 
 
     public function create()

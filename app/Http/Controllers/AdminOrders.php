@@ -31,4 +31,22 @@ class AdminOrders extends Controller
     }
 
 
+    public function filter(Request $request)
+    {
+        $start_date = $request->startDate;
+        $end_date = $request->endDate;
+
+
+        if ($start_date && $end_date) {
+            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->get();
+        } else {
+            $orders = [];
+        }
+
+        return view('Admin.orders', compact('orders'));
+    }
+
+
 }
