@@ -62,3 +62,5 @@ Route::get('check', [OrderAdminCheck::class, 'index']);
 Route::resource('admin', AdminOrders::class);
 
 Route::resource('cart', CartController::class);
+
+Route::post('cart/{orders}', [CartController::class, 'submit'])->name('cart.submit');

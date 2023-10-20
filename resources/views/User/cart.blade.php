@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container my-5 ">
+        <h1>Cart</h1>
         <div class="card">
             <div class="card-body">
                 @foreach ($orders as $order)
@@ -19,21 +20,20 @@
                                     <form action="{{ route('cart.update', $product_item->id) }}" method="POST">
                                         @csrf
                                         @method('put')
-                                        <button class="input-group-text decrement-btn" name="btn"
-                                            value="minus">-</button>
-                                    </form>
-                                    <input type="text" name="quantity" class="form-control qty-input text-center"
-                                        value="{{ $product_item->quantity }}">
-                                    <form action="{{ route('cart.update', $product_item->id) }}" method="post">
-                                        @csrf
-                                        @method('put')
-                                        <button class="input-group-text increment-btn" name="btn"
-                                            value="plus">+</button>
+                                        <div class="input-group">
+                                            <button class="input-group-text decrement-btn"
+                                                name="btn-{{ $product_item->id }}">-</button>
+                                            <input type="text" id="myInput-{{ $product_item->id }}" name="quantity"
+                                                value="{{ $product_item->quantity }}"
+                                                class="form-control text-center text-danger myInput">
+                                            <button class="input-group-text increment-btn"
+                                                name="btn-{{ $product_item->id }}">+</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <h3>{{ $product->price }}</h3>
+                                <h3>{{ $product->price * $product_item->quantity }}</h3>
                             </div>
                             <div class="col-md-2">
                                 <form action="{{ route('cart.destroy', $product_item->id) }}" method="post">
@@ -53,30 +53,54 @@
                         foreach ($orders as $order) {
                             $products = $order->order_products;
                             foreach ($products as $product_item) {
-                                $totalPrice += $product_item->product->price;
+                                $totalPrice += $product_item->product->price * $product_item->quantity;
                             }
                         }
                         echo $totalPrice;
                         ?>
                     </span>
                 </h3>
-                <div class="form-group">
-                    <label for="notes">Notes</label>
-                    <textarea class="form-control" id="notes" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="Room" class="my-3">Room</label>
-                    <select id="Room" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected disabled>Select your room</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-                <div>
-                    <button class="btn btn-success">Confirm</button>
-                </div>
+                <form action="{{ route('cart.store') }}" method="POST">
+                    @csrf
+                    @foreach ($orders as $order)
+                        <input type="hidden" name="orders[]" value="{{ $order->id }}">
+                    @endforeach
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea class="form-control" id="notes" rows="3" name="client_note"></textarea>
+                    </div>
+                    <div class="flex">
+                        <p class="fs-3 text-primary"> Room: {{ Auth::user()->room }}</p>
+                    </div>
+                    <div>
+                        <input type="submit" value="submit">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var incrementBtns = document.querySelectorAll('.increment-btn');
+        var decrementBtns = document.querySelectorAll('.decrement-btn');
+        var inputFields = document.querySelectorAll('.myInput');
+
+        incrementBtns.forEach(function(btn, index) {
+            btn.addEventListener('click', function() {
+                var value = parseInt(inputFields[index].value);
+                inputFields[index].value = value + 1;
+            });
+        });
+
+        decrementBtns.forEach(function(btn, index) {
+            btn.addEventListener('click', function() {
+                var value = parseInt(inputFields[index].value);
+                if (value > 0) {
+                    inputFields[index].value = value - 1;
+                }
+            });
+        });
+    });
+</script>
