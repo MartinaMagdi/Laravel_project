@@ -9,7 +9,7 @@
 
     <div class="container">
         <p class="h2 fw-bold mb-3">my orders</p>
-        <form action="{{ route('orders.index') }}" class="form-pick-date form-inline" method="POST">
+        <form action="{{ route('order.filter') }}" class="form-pick-date form-inline" method="get">
             @csrf
             <div class="row">
                 <div class="col-md-6">

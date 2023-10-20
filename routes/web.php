@@ -54,12 +54,17 @@ Route::resource('/user', UserController::class );
 Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 Route::resource('orders', OrderController::class);
+Route::get('order', [OrderController::class, 'filter'])->name('order.filter');
 
 // admin
 
-Route::get('check', [OrderAdminCheck::class, 'index']);
+Route::get('check', [OrderAdminCheck::class, 'index'])->name('check.index');
+Route::get('checks', [OrderController::class, 'filter'])->name('check.filter');
+
 
 Route::resource('admin', AdminOrders::class);
+Route::get('admin-filter', [OrderController::class, 'filter'])->name('admin.filter');
+
 
 Route::resource('cart', CartController::class);
 

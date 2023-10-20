@@ -46,25 +46,26 @@ class OrderController extends Controller
         }
     }
 
-    // public function filterOrder(Request $request){
-    //     // $startDate = $request->startDate;
-    //     // $endData   = $request->endDate;
+    public function filter(Request $request)
+    {
+        $orderDetails = OrderProduct::all();
+        $start_date = $request->startDate;
+        $end_date = $request->endDate;
 
-    //     $startDate = Carbon::createFromFormat('Y-m-d', $request->startDate)->startOfDay();
-    // $endDate = Carbon::createFromFormat('Y-m-d', $request->endDate)->endOfDay();
+        // dd($start_date, $end_date);
 
-    //     $userId = auth::id();
+        if ($start_date && $end_date) {
+            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->get();
 
-    //     $orders = DB::table('orders')
-    //     ->where('user_id', $userId)
-    //     ->whereBetween('created_at', [$startDate, $endDate])
-    //     ->paginate(4);
+                // dd($user_orders);
+        } else {
+            $orders = [];
+        }
 
-    //     // dd($startDate, $endDate);
-    //     // dd($orders);
-    //     return view('User.orders', compact('orders'));
-
-    // }
+        return view('User.orders', compact('orders'));
+    }
 
 
     public function create()
