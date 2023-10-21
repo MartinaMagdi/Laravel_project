@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,28 +18,7 @@ class OrderAdminCheck extends Controller
         $orders = Order::where('status', 'done')
         ->orderBy('created_at','desc')
         ->paginate(4);
-        return view('Admin.checks', compact('orders'));
+        $users = User::where("role", "user")->get();
+        return view('Admin.checks', compact('orders', 'users'));
     }
-
-
-    public function filter(Request $request)
-    {
-        $start_date = $request->startDate;
-        $end_date = $request->endDate;
-
-        if ($start_date && $end_date) {
-            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else {
-            $orders = [];
-        }
-
-        return view('Admin.orders', compact('orders'));
-    }
-
-    // orders->order-products->product_id
-    // products::find(orders->order-products->product_id);
-
 }

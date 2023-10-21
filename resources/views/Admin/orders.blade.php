@@ -30,12 +30,17 @@
                     </div>
                     <div class="col-md-6 mt-3">
                         <div class="form-group">
-                            <label for="name" class="fs-5">User name</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <label for="user" class="mb-1 fs-5 fw-bold">Add order to user</label>
+                            <select id="user" class="form-select" aria-label="Default select example" name="user_id">
+                                <option selected disabled>Select a user</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Search</button>
+                <button type="submit" class="btn btn-primary my-2">Search</button>
             </form>
 
             <div class="content">

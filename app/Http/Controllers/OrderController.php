@@ -54,74 +54,66 @@ class OrderController extends Controller
         $orderDetails = OrderProduct::all();
         $start_date = $request->startDate;
         $end_date = $request->endDate;
-        $name = $request->name;
-        $userId = null;
+        $userId = $request->user_id;
+        $users = User::where("role", "user")->get();
 
-        if ($name) {
-            $user = User::where('name', $name)->first();
-
-            if ($user) {
-                $userId = $user->id;
-            }
-        }
-            if (Auth::user()->role == 'admin') {
-                if ($start_date && $end_date) {
-                    $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                        ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                        ->whereIn('status', ['processing', 'out for delivery'])
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(4);
-                } else if ($start_date) {
-                    $orders = $this->selectOrdersDate('>=', $start_date);
-                } else if ($end_date) {
-                    $orders = $this->selectOrdersDate('<=', $end_date);
-                }else if ($start_date && $end_date && $name) {
-                    $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+        if (Auth::user()->role == 'admin') {
+            if ($start_date && $end_date && $userId) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->where('status', ['processing', 'out for delivery'])
+                ->where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+            } else if ($start_date && $end_date) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
                     ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                    ->where('status', ['processing', 'out for delivery'])
-                    ->where('user_id', $userId)
+                    ->whereIn('status', ['processing', 'out for delivery'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(4);
-                } else if ($start_date && $name) {
-                    $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                    ->where('status', ['processing', 'out for delivery'])
-                    ->where('user_id', $userId)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(4);
-                }else if ($end_date && $name) {
-                    $orders = Order::whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                    ->where('status', ['processing', 'out for delivery'])
-                    ->where('user_id', $userId)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(4);
-                }else if ($name){
-                    $orders = Order::where('status', ['processing', 'out for delivery'])
-                    ->where('user_id', $userId)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(4);
-                }
-                 else {
-                    $orders = Order::whereIn('status', ['processing', 'out for delivery'])
-                        ->paginate(4);
-                }
-                return view('Admin.orders', compact('orders'));
+            } else if ($start_date && $userId) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->where('status', ['processing', 'out for delivery'])
+                ->where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+            } else if ($end_date && $userId) {
+                $orders = Order::whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->where('status', ['processing', 'out for delivery'])
+                ->where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+            } else if ($start_date) {
+                $orders = $this->selectOrdersDate('>=', $start_date);
+            } else if ($end_date) {
+                $orders = $this->selectOrdersDate('<=', $end_date);
+            } else if ($userId){
+                $orders = Order::where('status', ['processing', 'out for delivery'])
+                ->where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
             } else {
-                if ($start_date && $end_date) {
-                    $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                        ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                        ->whereIn('status', ['processing', 'out for delivery', 'done'])
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(4);
-                } else if ($start_date) {
-                    $orders = $this->selectOrdersDate('>=', $start_date);
-                } else if ($end_date) {
-                    $orders = $this->selectOrdersDate('<=', $end_date);
-                } else {
-                    $orders = Order::whereIn('status', ['processing', 'out for delivery', 'done'])
-                        ->paginate(4);
-                }
-                return view('User.orders', compact('orders'));
+                $orders = Order::whereIn('status', ['processing', 'out for delivery'])
+                    ->paginate(4);
             }
+            return view('Admin.orders', compact('orders', 'users'));
+        } else {
+            if ($start_date && $end_date) {
+                $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                    ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                    ->whereIn('status', ['processing', 'out for delivery', 'done'])
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(4);
+            } else if ($start_date) {
+                $orders = $this->selectOrdersDate('>=', $start_date);
+            } else if ($end_date) {
+                $orders = $this->selectOrdersDate('<=', $end_date);
+            } else {
+                $orders = Order::whereIn('status', ['processing', 'out for delivery', 'done'])
+                    ->paginate(4);
+            }
+            return view('User.orders', compact('orders', 'users'));
+        }
 
     }
 
@@ -130,48 +122,39 @@ class OrderController extends Controller
         $orderDetails = OrderProduct::all();
         $start_date = $request->startDate;
         $end_date = $request->endDate;
-        $name = $request->name;
-        $userId = null;
+        $userId = $request->user_id;
+        $users = User::where("role", "user")->get();
 
-        if ($name) {
-            $user = User::where('name', $name)->first();
-
-            if ($user) {
-                $userId = $user->id;
-            }
-        }
-
-
-        if ($start_date && $end_date) {
-            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                ->where('status', 'done')
-                ->orderBy('created_at', 'desc')
-                ->paginate(4);
-        } else if ($start_date) {
-            $orders = $this->selectOrdersDateCheck('>=', $start_date);
-        } else if ($end_date) {
-            $orders = $this->selectOrdersDateCheck('<=', $end_date);
-        } else if ($start_date && $end_date && $name) {
+        if ($start_date && $end_date && $userId) {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
             ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
             ->where('status', 'done')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(4);
-        } else if ($start_date && $name) {
+        } else if ($start_date && $end_date) {
+            $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
+                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->where('status', 'done')
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+        } else if ($start_date && $userId) {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
             ->where('status', 'done')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(4);
-        }else if ($end_date && $name) {
+        }else if ($end_date && $userId) {
             $orders = Order::whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
             ->where('status', 'done')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(4);
-        }else if ($name){
+        } else if ($start_date) {
+            $orders = $this->selectOrdersDateCheck('>=', $start_date);
+        } else if ($end_date) {
+            $orders = $this->selectOrdersDateCheck('<=', $end_date);
+        } else if ($userId){
             $orders = Order::where('status', 'done')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
@@ -181,7 +164,7 @@ class OrderController extends Controller
                 ->paginate(4);;
         }
 
-        return view('Admin.checks', compact('orders'));
+        return view('Admin.checks', compact('orders', 'users'));
     }
 
     public function selectOrdersDateCheck($condition, $date)

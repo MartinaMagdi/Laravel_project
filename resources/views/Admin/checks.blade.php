@@ -30,12 +30,17 @@
                     </div>
                     <div class="col-md-6 mt-3">
                         <div class="form-group">
-                            <label for="name" class="fs-5">User name</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <label for="user" class="mb-1 fs-5 fw-bold">Add order to user</label>
+                            <select id="user" class="form-select" aria-label="Default select example" name="user_id">
+                                <option selected disabled>Select a user</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Search</button>
+                <button type="submit" class="btn btn-primary my-2">Search</button>
             </form>
 
             <div class="content">
@@ -53,48 +58,48 @@
                     </thead>
                     <tbody>
                         @if ($orders && $orders->count() > 0)
-                        @foreach ($orders as $order)
-                            <tr>
-                                <td>
-                                    <p style="display: inline; margin-right: 10px;">{{ $order->created_at }} </p>
-                                    <button onclick="toggleCollapse({{ $order->id }})" id="btn-collapse-{{ $order->id }}">
-                                        <i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </td>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td>
+                                        <p style="display: inline; margin-right: 10px;">{{ $order->created_at }} </p>
+                                        <button onclick="toggleCollapse({{ $order->id }})" id="btn-collapse-{{ $order->id }}">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </td>
 
-                                <td>{{ $order->status }} </td>
-                                <td>
-                                    <?php
-                                    $products = $order->order_products;
-                                    $sumOfPrice = 0;
-                                    foreach ($products as $product_item) {
-                                        $sumOfPrice += $product_item->product->price * $product_item->quantity;
-                                    }
-                                    echo $sumOfPrice . " LE";
-                                    ?>
-                                </td>
-                                <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->user->room }}</td>
-                                <td>{{ $order->note }}</td>
-                            </tr>
-                            <div class="collapse" id="myCollapse-{{ $order->id }}">
-                                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
-                                    @foreach ($order->order_products as $product_item)
-                                        <div class="col mb-4">
-                                            <div class="card">
-                                                <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image"
-                                                    class="card-img-top" style="height: 200px; max-height: 200px">
-                                                <div class="card-body d-flex justify-content-between">
-                                                    <h5 class="card-title"><span class="fw-bold me-2">Price:</span>{{ $product_item->product->price }} LE</h5>
-                                                    <h5 class="card-title"><span class="fw-bold me-2">Quantity:</span>{{ $product_item->quantity }}</h5>
+                                    <td>{{ $order->status }} </td>
+                                    <td>
+                                        <?php
+                                        $products = $order->order_products;
+                                        $sumOfPrice = 0;
+                                        foreach ($products as $product_item) {
+                                            $sumOfPrice += $product_item->product->price * $product_item->quantity;
+                                        }
+                                        echo $sumOfPrice . " LE";
+                                        ?>
+                                    </td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ $order->user->room }}</td>
+                                    <td>{{ $order->note }}</td>
+                                </tr>
+                                <div class="collapse" id="myCollapse-{{ $order->id }}">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
+                                        @foreach ($order->order_products as $product_item)
+                                            <div class="col mb-4">
+                                                <div class="card">
+                                                    <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image" 
+                                                        class="card-img-top" style="height: 200px; max-height: 200px">
+                                                    <div class="card-body d-flex justify-content-between">
+                                                        <h5 class="card-title"><span class="fw-bold me-2">Price:</span>{{ $product_item->product->price }} LE</h5>
+                                                        <h5 class="card-title"><span class="fw-bold me-2">Quantity:</span>{{ $product_item->quantity }}</h5>
+                                                    </div>
+                                                    <p class="text-primary text-center fs-4">Total Price: <span class="fw-bold">{{ $product_item->product->price * $product_item->quantity }} LE</span></p>
                                                 </div>
-                                                <p class="text-primary text-center fs-4">Total Price: <span class="fw-bold">{{ $product_item->product->price * $product_item->quantity }} LE</span></p>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
                         @endif
                     </tbody>
                 </table>
@@ -123,19 +128,19 @@
         </div>
 
         <script>
-        function toggleCollapse(orderId) {
-            console.log('clicked');
-            let collapseElement = document.getElementById("myCollapse-" + orderId);
-            let collapseBtn = document.getElementById("btn-collapse-" + orderId);
+            function toggleCollapse(orderId) {
+                console.log('clicked');
+                let collapseElement = document.getElementById("myCollapse-" + orderId);
+                let collapseBtn = document.getElementById("btn-collapse-" + orderId);
 
-            if (collapseElement.style.display === "none") {
-                collapseElement.style.display = "block";
-                collapseBtn.innerHTML = '<i class="bi bi-dash"></i>';
-            } else {
-                collapseElement.style.display = "none";
-                collapseBtn.innerHTML = '<i class="bi bi-plus-lg"></i>';
+                if (collapseElement.style.display === "none") {
+                    collapseElement.style.display = "block";
+                    collapseBtn.innerHTML = '<i class="bi bi-dash"></i>';
+                } else {
+                    collapseElement.style.display = "none";
+                    collapseBtn.innerHTML = '<i class="bi bi-plus-lg"></i>';
+                }
             }
-        }
         </script>
     </div>
 @endsection
