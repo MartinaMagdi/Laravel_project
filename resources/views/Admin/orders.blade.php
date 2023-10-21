@@ -61,7 +61,7 @@
                                     foreach ($products as $product_item) {
                                         $sumOfPrice += $product_item->product->price * $product_item->quantity;
                                     }
-                                    echo $sumOfPrice;
+                                    echo $sumOfPrice . " LE";
                                     ?>
                                 </td>
 
@@ -91,9 +91,10 @@
                                                 <img src="{{ asset('images/products/' . $product_item->product->image) }}"
                                                     alt="Product Image" class="card-img-top" style="height: 200px; max-height: 200px">
                                                 <div class="card-body d-flex justify-content-between">
-                                                    <h5 class="card-title">{{ $product_item->product->price }}</h5>
+                                                    <h5 class="card-title"><span class="fw-bold me-2">Price:</span>{{ $product_item->product->price }} LE</h5>
                                                     <h5 class="card-title"><span class="fw-bold me-2">Quantity:</span>{{ $product_item->quantity }}</h5>
                                                 </div>
+                                                <p class="text-primary text-center fs-4">Total Price: <span class="fw-bold">{{ $product_item->product->price * $product_item->quantity }} LE</span></p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -115,7 +116,7 @@
                                 $totalPrice += $product_item->product->price * $product_item->quantity;
                             }
                         }
-                        echo $totalPrice;
+                        echo $totalPrice . ' LE';
                         ?>
                     </p>
                 </div>
