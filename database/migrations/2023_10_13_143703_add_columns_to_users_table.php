@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string("image")->nullable();
+            $table->string("image")->nullable()->default('download.png');
             $table->enum("role", ["user", "admin"])->default("user");
             $table->string("room")->nullable();
         });
