@@ -28,6 +28,12 @@
                                 max="<?php echo date('Y-m-d', strtotime('+1 year')); ?>">
                         </div>
                     </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="form-group">
+                            <label for="name" class="fs-5">User name</label>
+                            <input type="text" name="name" id="name" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Search</button>
             </form>
@@ -39,6 +45,10 @@
                             <th scope="col">Order date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Note</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +73,9 @@
                                     echo $sumOfPrice . " LE";
                                     ?>
                                 </td>
+                                <td>{{ $order->user->name }}</td>
+                                <td>{{ $order->user->room }}</td>
+                                <td>{{ $order->note }}</td>
                             </tr>
                             <div class="collapse" id="myCollapse-{{ $order->id }}">
                                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4">
