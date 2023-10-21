@@ -58,7 +58,7 @@
                                     $products = $order->order_products;
                                     $sumOfPrice = 0;
                                     foreach ($products as $product_item) {
-                                        $sumOfPrice += $product_item->product->price;
+                                        $sumOfPrice += $product_item->product->price * $product_item->quantity;
                                     }
                                     echo $sumOfPrice;
                                     ?>
@@ -70,9 +70,10 @@
                                         <div class="col mb-4">
                                             <div class="card">
                                                 <img src="{{ asset('images/products/' . $product_item->product->image)}}" alt="Product Image"
-                                                    class="card-img-top">
-                                                <div class="card-body">
+                                                    class="card-img-top" style="height: 200px; max-height: 200px">
+                                                <div class="card-body d-flex justify-content-between">
                                                     <h5 class="card-title">{{ $product_item->product->price }}</h5>
+                                                    <h5 class="card-title"><span class="fw-bold me-2">Quantity:</span>{{ $product_item->quantity }}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +95,7 @@
                             foreach ($orders as $order) {
                                 $products = $order->order_products;
                                 foreach ($products as $product_item) {
-                                    $totalPrice += $product_item->product->price;
+                                    $totalPrice += $product_item->product->price * $product_item->quantity;
                                 }
                             }
                         }
