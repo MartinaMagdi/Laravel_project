@@ -95,13 +95,25 @@ class OrderController extends Controller
                 ->where('status', 'done')
                 ->orderBy('created_at', 'desc')
                 ->paginate(4);
-            // dd($orders);
-        } else {
+        } else if ($start_date) {
+            $orders = $this->selectOrdersDate('>=', $start_date);
+        } else if ($end_date) {
+            $orders = $this->selectOrdersDate('<=', $end_date);
+        }
+        else {
             $orders =  Order::whereIn('status', ['done'])
             ->paginate(4);;
         }
 
         return view('Admin.checks', compact('orders'));
+    }
+
+    public function selectOrdersDate($condition, $date) {
+        $orders = Order::whereDate('created_at', $condition, date('Y-m-d', strtotime($date)))
+        ->where('status', 'done')
+        ->orderBy('created_at', 'desc')
+        ->paginate(4);
+        return $orders;
     }
 
 
