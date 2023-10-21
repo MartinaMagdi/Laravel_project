@@ -8,8 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderAdminCheck extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('is_admin');
+    }
+
     public function index(){
-        $orders = Order::where('status', 'done')->paginate(4);
+        $orders = Order::where('status', 'done')
+        ->orderBy('created_at','desc')
+        ->paginate(4);
         return view('Admin.checks', compact('orders'));
     }
 
@@ -19,10 +26,10 @@ class OrderAdminCheck extends Controller
         $start_date = $request->startDate;
         $end_date = $request->endDate;
 
-
         if ($start_date && $end_date) {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
                 ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             $orders = [];

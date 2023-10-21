@@ -42,6 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($orders && $orders->count() > 0)
                         @foreach ($orders as $order)
                             <tr>
                                 <td>
@@ -79,6 +80,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
                 <div class="price">
@@ -88,10 +90,12 @@
                     <p class="total-price fw-bold fs-3 text-primary" style="display: inline; margin-right: 10px;">
                         <?php
                         $totalPrice = 0;
-                        foreach ($orders as $order) {
-                            $products = $order->order_products;
-                            foreach ($products as $product_item) {
-                                $totalPrice += $product_item->product->price;
+                        if ($orders && $orders->count() > 0){
+                            foreach ($orders as $order) {
+                                $products = $order->order_products;
+                                foreach ($products as $product_item) {
+                                    $totalPrice += $product_item->product->price;
+                                }
                             }
                         }
                         echo $totalPrice;
