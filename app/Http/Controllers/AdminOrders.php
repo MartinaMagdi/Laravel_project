@@ -15,7 +15,9 @@ class AdminOrders extends Controller
     }
 
     public function index(){
-        $orders = Order::whereIn('status', ['processing', 'out for delivery'])->paginate(4);
+        $orders = Order::whereIn('status', ['processing', 'out for delivery'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(4);
         return view('Admin.orders', compact('orders'));
     }
 
@@ -40,6 +42,7 @@ class AdminOrders extends Controller
         if ($start_date && $end_date) {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
                 ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+                ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             $orders = [];

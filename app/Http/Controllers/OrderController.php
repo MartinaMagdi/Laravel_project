@@ -41,7 +41,9 @@ class OrderController extends Controller
 
             return view('User.orders', compact('orders'));
         } else {
-            $orders = Order::where('user_id', $userId)->whereIn('status', ['processing', 'out for delivery', 'done'])->paginate(4);
+            $orders = Order::where('user_id', $userId)->whereIn('status', ['processing', 'out for delivery', 'done'])
+            ->orderBy('created_at','desc')
+            ->paginate(4);
             return view('User.orders', compact('orders'));
         }
     }
@@ -55,9 +57,11 @@ class OrderController extends Controller
     if (Auth::user()->role == 'admin') {
         if ($start_date && $end_date) {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
-                ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
-                ->whereIn('status', ['processing', 'out for delivery'])
-                ->paginate(4);
+            ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
+            ->whereIn('status', ['processing', 'out for delivery'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(4);
+
         } else {
             $orders = Order::whereIn('status', ['processing', 'out for delivery'])
                 ->paginate(4);
@@ -68,6 +72,7 @@ class OrderController extends Controller
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
                 ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
                 ->whereIn('status', ['processing', 'out for delivery', 'done'])
+                ->orderBy('created_at', 'desc')
                 ->paginate(4);
         } else {
             $orders = Order::whereIn('status', ['processing', 'out for delivery', 'done'])
@@ -88,6 +93,7 @@ class OrderController extends Controller
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d', strtotime($start_date)))
                 ->whereDate('created_at', '<=', date('Y-m-d', strtotime($end_date)))
                 ->where('status', 'done')
+                ->orderBy('created_at', 'desc')
                 ->paginate(4);
             // dd($orders);
         } else {
