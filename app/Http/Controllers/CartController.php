@@ -25,7 +25,7 @@ class CartController extends Controller
         } else {
             $orders = Order::where('user_id', $userId)->whereIn('status', ['cart'])->paginate(4);
         }
-        
+
         if(isset($user)) {
             return view('shared.cart', compact('orders', 'user'));
         }
