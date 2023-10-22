@@ -34,25 +34,26 @@ class CartController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(Request $request, $orders, $notes)
     {
-
         $orders = $request->orders;
-
-        // dd($orders);
-
+        $notes = $request->query('notes');
+    
+        dd($orders); 
+    
         foreach ($orders as $orderId) {
             $order = Order::findOrFail($orderId);
-            // dump($order->id);
             $order->update([
-                'note' => $request->client_note,
+                'note' => $notes,
                 'status' => 'processing'
             ]);
         }
-        if (Auth::User() !== null && Auth::User()->role == 'admin') {
-            return to_route('admin-index');
+    
+        if (Auth::user() !== null && Auth::user()->role == 'admin') {
+            return redirect()->route('admin-index');
         }
-        return to_route('orders.index');
+    
+        return redirect()->route('orders.index');
     }
 
 
