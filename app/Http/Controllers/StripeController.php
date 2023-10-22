@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -54,7 +55,7 @@ class StripeController extends Controller
                  
             ],
             'mode'        => 'payment',
-            'success_url' => route('orders.index'),
+            'success_url' => (Auth::User() !== null && Auth::User()->role == 'admin') ? route('admin-index') : route('orders.index'),
         ]);
  
         return redirect()->away($session->url);
