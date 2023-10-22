@@ -59,9 +59,15 @@
                                 </button>
                                 
                             <div class="row">
-                                <div class="col-md-12">
+                            <div class="col-md-12">
                                   <a  href="{{ url('auth/google') }}" style="margin-top:10px;color: #545454;background-color: #ffffff;box-shadow: 0 1px 2px 1px #ddd;" class="btn btn-lg btn-google btn-block text-capitalize btn-outline" href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a>
 
+                                </div>
+                                <div class="col-md-6 mt-2">
+                                  <a  href="{{ url('auth/facebook') }}" class="btn btn-lg text-capitalize" style="padding: 10px 20px;font-size: 16px;font-weight: bold;border: none;background-color: #3b5998;color: #ffffff;cursor: pointer;border-radius: 4px;display: flex;align-items: center;">
+                                  <i class="bi bi-facebook me-2"></i>                                        
+                                  Login with Facebook
+                                    </a>
                                 </div>
 
                                 @if (Route::has('password.request'))

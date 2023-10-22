@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,9 @@ Route::resource('user', UserController::class );
 #############################GoogleLogin
 Route::get('auth/google',[GoogleController::class,'googlepage']);
 Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
+#############################Facebook
+Route::get('auth/facebook',[FacebookController::class,'facebookpage']);
+Route::get('auth/facebook/callback',[FacebookController::class,'facebookredirect']);
 
 Route::resource('orders', OrderController::class);
 Route::resource('orders', OrderController::class);
