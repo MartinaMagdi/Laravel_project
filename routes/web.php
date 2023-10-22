@@ -45,10 +45,6 @@ Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
 Route::get('auth/facebook',[FacebookController::class,'facebookpage']);
 Route::get('auth/facebook/callback',[FacebookController::class,'facebookredirect']);
 
-Route::resource('orders', OrderController::class);
-Route::resource('orders', OrderController::class);
-
-
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
@@ -57,13 +53,9 @@ Route::post('profile/changepassword/{id}', [ProfileController::class ,'updatepas
 
 Route::resource('/user', UserController::class )->middleware('auth');
 
-Route::get('auth/google',[GoogleController::class,'googlepage']);
-Route::get('auth/google/callback',[GoogleController::class,'googlecallback']);
-Route::resource('orders', OrderController::class);
 Route::get('order', [OrderController::class, 'filter'])->name('order.filter');
 
 // admin
-
 Route::get('check', [OrderAdminCheck::class, 'index'])->name('admin-check');
 Route::get('admin-orders', [AdminOrders::class, 'index'])->name('admin-index');
 Route::post('admin-orders', [AdminOrders::class, 'update'])->name('admin-update');
