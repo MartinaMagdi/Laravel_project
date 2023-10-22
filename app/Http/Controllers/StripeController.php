@@ -55,7 +55,6 @@ class StripeController extends Controller
             ],
             'mode'        => 'payment',
             'success_url' => route('orders.index'),
-            'cancel_url'  => route('cart.index'),
         ]);
  
         return redirect()->away($session->url);

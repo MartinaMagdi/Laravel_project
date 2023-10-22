@@ -97,9 +97,6 @@
                 </tbody>
             </table>
             <div class="price">
-                <p class="fw-bold fs-3">
-                    price
-                </p>
                 <div class="price">
                     <p class="fw-bold fs-3" style="display: inline; margin-right: 30px;">
                         Total price :
