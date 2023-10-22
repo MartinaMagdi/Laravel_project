@@ -84,11 +84,11 @@
                     <div>
                     @if(isset($product))
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
-                    <!-- <input type="submit" value="submit"> -->
+                    <button name="cash-on-delivery" style="padding: 10px 20px;font-size: 16px;font-weight: bold;border: none;background-color: #049462;color: #ffffff;cursor: pointer;border-radius: 4px;" class="me-3" type="submit" id="checkout-live-button"><i class="bi bi-cash me-1 fs-6"></i> Cash on Delivery</button>
                     <input type="hidden"name="total" value="{{$totalPrice}}">
                     <input type="hidden"name="productname" value="{{ $product->name }}">
                     <input type="hidden"name="quantity" value="{{  $product_item->quantity }}">
-                    <button style="padding: 10px 20px;font-size: 16px;font-weight: bold;border: none;background-color: #635bff;color: #ffffff;cursor: pointer;border-radius: 4px;"  type="submit" id="checkout-live-button"><i class="bi bi-stripe"></i> Checkout</button>
+                    <button name="checkout" style="padding: 10px 20px;font-size: 16px;font-weight: bold;border: none;background-color: #635bff;color: #ffffff;cursor: pointer;border-radius: 4px;"  type="submit" id="checkout-live-button"><i class="bi bi-stripe me-1 fs-6"></i> Checkout</button>
                     @endif
                 </div>
 
