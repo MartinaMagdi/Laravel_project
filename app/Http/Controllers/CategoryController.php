@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
      $category = Category::paginate(5);
 
-     return view('admin.category.index',['categories'=>$category]);
+     return view('Admin.category.index',['categories'=>$category]);
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-              return view('admin.category.create');
+              return view('Admin.category.create');
 
     }
 
@@ -69,7 +69,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-               return view('admin.category.show',['category'=>$category]);
+               return view('Admin.category.show',['category'=>$category]);
 
     }
 
@@ -78,7 +78,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-                return view('admin.category.edit',['category'=>$category]);
+                return view('Admin.category.edit',['category'=>$category]);
 
     }
 

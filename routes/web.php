@@ -7,6 +7,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderAdminCheck;
@@ -77,3 +78,8 @@ Route::get('admin-filter', [OrderController::class, 'filter'])->name('admin.filt
 Route::resource('cart', CartController::class);
 
 Route::post('cart/{orders}', [CartController::class, 'submit'])->name('cart.submit');
+
+
+Route::get('/checkout', [StripeController::class,'checkout'])->name('checkout');
+Route::post('/session', [StripeController::class,'session'])->name('session');
+Route::get('/success',  [StripeController::class,'success'])->name('success');

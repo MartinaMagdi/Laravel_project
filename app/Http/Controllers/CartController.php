@@ -59,6 +59,13 @@ class CartController extends Controller
     public function update(Request $request,  $id)
     {
         $orderProduct = OrderProduct::findOrFail($id);
+        $quantity = $request->quantity;
+
+        if($quantity == 0){
+
+            $orderProduct->delete();
+
+        }
         $orderProduct->update([
             'quantity' => $request->quantity
         ]);

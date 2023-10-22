@@ -17,8 +17,7 @@
             @csrf
             {{-- --------------------------------- Section for Admin only ------------------------------------ --}}
             @if (Auth::User() !== null && Auth::User()->role == 'admin')
-                <a href={{ route('products.create') }} class="btn btn-primary ms-auto d-block w-25">Add Product</a>
-
+            <a href="{{ route('products.create') }}" class="btn btn-primary ms-auto d-block w-25">Add Product</a>
                 {{-- Alert --}}
                 @if (Session::get('status') == 'deleted' || Session::get('status') == 'updated')
                     <div class="alert alert-dismissible fade show mt-4 {{ Session::get('status') == 'deleted' ? 'alert-danger' : 'alert-success' }}"
