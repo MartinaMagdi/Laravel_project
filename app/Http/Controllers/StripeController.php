@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+
 
 
 class StripeController extends Controller
@@ -16,8 +18,21 @@ class StripeController extends Controller
     public function session(Request $request)
     {
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
+        
+
         $orders = $request->orders;
-        $note = $request->client_note;
+
+        // dd($orders);
+
+        foreach ($orders as $orderId) {
+            $order = Order::findOrFail($orderId);
+            // dump($order->id);
+            $order->update([
+                'note' => $request->client_note,
+                'status' => 'processing'
+            ]);
+        }
+       
         $productname = $request->get('productname');
         $quantity = $request->get('quantity');
         $totalprice = $request->get('total');
@@ -39,7 +54,7 @@ class StripeController extends Controller
                  
             ],
             'mode'        => 'payment',
-            'success_url' => route('cart.store', ['orders' => $orders, 'notes' => $note]),
+            'success_url' => route('orders.index'),
             'cancel_url'  => route('cart.index'),
         ]);
  

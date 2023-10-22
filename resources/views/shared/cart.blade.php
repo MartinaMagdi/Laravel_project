@@ -82,13 +82,16 @@
                     @forEach($orders as $order)
                     @if(isset($order))
                     <div>
+                    @if(isset($product))
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <!-- <input type="submit" value="submit"> -->
                     <input type="hidden"name="total" value="{{$totalPrice}}">
                     <input type="hidden"name="productname" value="{{ $product->name }}">
                     <input type="hidden"name="quantity" value="{{  $product_item->quantity }}">
                     <button style="padding: 10px 20px;font-size: 16px;font-weight: bold;border: none;background-color: #635bff;color: #ffffff;cursor: pointer;border-radius: 4px;"  type="submit" id="checkout-live-button"><i class="bi bi-stripe"></i> Checkout</button>
-                    </div>
+                    @endif
+                </div>
+
                     @endif
                     @endforeach
                 </form>
