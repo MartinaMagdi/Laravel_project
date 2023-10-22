@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <h3>{{ $product->price * $product_item->quantity }}</h3>
+                                <h3>{{ $product->price * $product_item->quantity }} LE</h3>
                             </div>
                             <div class="col-md-2">
                                 <form action="{{ route('cart.destroy', $product_item->id) }}" method="post">
@@ -56,7 +56,7 @@
                                 $totalPrice += $product_item->product->price * $product_item->quantity;
                             }
                         }
-                        echo $totalPrice;
+                        echo $totalPrice . ' LE';
                         ?>
                     </span>
                 </h3>
